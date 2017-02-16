@@ -10,9 +10,21 @@ angular.module('controllers', [])
   });
 }])
 
-.controller('SessionCtrl', ['$scope', '$stateParams', 'SessionsService', 'SpeakersService', '$cordovaSocialSharing', function($scope, $stateParams, sessionsService, speakersService, $cordovaSocialSharing) {
+.controller('SessionCtrl', ['$scope', '$stateParams', 'SessionsService', 'SpeakersService', '$cordovaSocialSharing', 'PlanningService', function($scope, $stateParams, sessionsService, speakersService, $cordovaSocialSharing, planningService) {
   sessionsService.getSession($stateParams.sessionId).then(session => {
     $scope.session = session;
+    planningService.isSessionPlanned(session.id).then(bool => {
+      $scope.session.added = bool
+    }, console.error);
+
+    $scope.changePlanning = function(){
+      if($scope.session.added){
+        planningService.addPlannedSession(session.id).then(console.log, console.error);
+      } else {
+        planningService.removePlannedSession(session.id).then(console.log, console.error);
+      }
+    }
+
     $scope.share = function(){
       console.log("sharing");
 
@@ -191,7 +203,10 @@ angular.module('controllers', [])
   }
 })
 
-.controller('CalendarCtrl', function($scope) {
+.controller('CalendarCtrl', ['$scope', 'SessionsService', 'PlanningService', function($scope, sessionsService, planningService) {
+  console.log('hope');
+  var eventDate = new Date();
+
   $scope.calendarClick = function(){
     console.log('click !');
   }
@@ -205,25 +220,31 @@ angular.module('controllers', [])
       eventClick: $scope.calendarClick,
     }
   };
-  $scope.eventSources = [
-        {
-            events: [
-                {
-                    title  : 'event1',
-                    start  : '2017-02-16'
-                },
-                {
-                    title  : 'event2',
-                    start  : '2017-02-16',
-                    end    : '2017-02-17'
-                },
-                {
-                    title  : 'event3',
-                    start  : '2017-02-16T12:30:00',
-                    end    : '2017-02-16T15:30:00'
-                }
-            ]
-        }
-  ];
-})
+
+  $scope.eventSources = [{events: []}];
+
+  console.log('Listing known sessions');
+
+  $scope.refresh = function(){
+    planningService.getAllPlannedSessions().then(sessionIds => {
+      console.log(sessionIds);
+      $scope.eventSources[0].events.splice(0, $scope.eventSources[0].events.length);
+
+      sessionIds.forEach(sId => {
+        sessionsService.getSession(sId).then(session =>{
+          console.log('session : ', session);
+
+          var start = new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate(), session.hourStart, session.minStart);
+          var end   = new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate(), session.hourEnd, session.minEnd);
+          $scope.eventSources[0].events.push({
+            title: session.title,
+            start: start.toISOString(),
+            end: end.toISOString(),
+          });
+        });
+      });
+      console.log('events :', $scope.eventSources);
+    }, console.error);
+  }
+}])
 ;

@@ -27,6 +27,9 @@ angular.module('starter', ['ionic', 'controllers', 'services', 'ngCordova', 'ui.
 
     if(databaseService.isDBPluginAvailable()){
       databaseService.initDB();
+      console.log('db is initialized !');
+    } else {
+      console.error('Seems like no database is available !');
     }
 
     document.addEventListener("pause", function (event) {

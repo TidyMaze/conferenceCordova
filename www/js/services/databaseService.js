@@ -14,7 +14,9 @@ angular.module('services').factory('DatabaseService', ['$cordovaSQLite', '$windo
 
   var initDB = function(){
     $cordovaSQLite.execute(getDB(),'DROP TABLE IF EXISTS notes');
+    $cordovaSQLite.execute(getDB(),'DROP TABLE IF EXISTS planning');
     $cordovaSQLite.execute(getDB(),'CREATE TABLE IF NOT EXISTS notes (sessionId varchar2(50) primary key, text text, picture text)');
+    $cordovaSQLite.execute(getDB(),'CREATE TABLE IF NOT EXISTS planning (sessionId varchar2(50) primary key)');
   }
 
   return {

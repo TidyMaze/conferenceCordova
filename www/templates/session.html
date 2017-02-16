@@ -3,6 +3,7 @@
     <div class="card">
       <div class="item item-text-wrap">
         <h1>{{session.title}} <button class="button button-positive" ng-click="share()">Share</button></h1>
+        <ion-toggle ng-model="session.added" toggle-class="toggle-calm" ng-change="changePlanning()">Add to my planning</ion-toggle>
         <div ng-bind-html="session.desc"></div>
       </div>
     </div>
