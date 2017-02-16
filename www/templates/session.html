@@ -1,0 +1,24 @@
+<ion-view view-title="Session">
+  <ion-content>
+    <div class="card">
+      <div class="item item-text-wrap">
+        <h1>{{session.title}} <button class="button button-positive" ng-click="share()">Share</button></h1>
+        <div ng-bind-html="session.desc"></div>
+      </div>
+    </div>
+    <div class="card">
+      <ion-list>
+        <ion-item ng-repeat="speaker in speakers" href="#/app/speakers/{{speaker.id}}">
+          {{speaker.firstname}} {{speaker.lastname}}
+        </ion-item>
+      </ion-list>
+    </div>
+    <div class="card">
+      <div class="item item-text-wrap">
+        <a class="button button-positive" href="#/app/notes/{{session.id}}">
+          My Notes
+        </a>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

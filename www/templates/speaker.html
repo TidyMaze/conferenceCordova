@@ -1,0 +1,25 @@
+<ion-view view-title="Speaker">
+  <ion-content>
+    <div class="card">
+      <div class="item item-text-wrap">
+        <h1>{{speaker.firstname}} {{speaker.lastname | uppercase}}</h1>
+        <ion-toggle ng-model="speaker.added" toggle-class="toggle-calm" ng-change="changeContact()">Add to my contacts</ion-toggle>
+        <img ng-if="speaker.image" src="data/images/{{speaker.image}}"/>
+        <br />
+        <button ng-repeat="social in speaker.socials" class ="button button-stable" ng-click="openurl('{{social.link}}')">
+          <i class="icon {{social.ioniconsClass}}" style="font-size:20px;"></i>
+        </button>
+        <div class="card">
+          <div class="item item-divider">
+            Ses présentations
+          </div>
+          <ion-list>
+            <ion-item ng-repeat="session in sessions" href="#/app/sessions/{{session.id}}">
+              {{session.title}}
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

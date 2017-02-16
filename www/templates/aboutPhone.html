@@ -1,0 +1,15 @@
+<ion-view view-title="About Phone">
+  <ion-content>
+    <div class="card">
+      <div class="item item-text-wrap">
+        About phone
+        <div class="list">
+          <label class="item item-input" ng-repeat="(key, value) in info">
+            <span class="input-label">{{key}}</span>
+            <input type="text" value="{{value}}" disabled/>
+          </label>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

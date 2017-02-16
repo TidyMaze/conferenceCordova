@@ -1,0 +1,29 @@
+<ion-view view-title="Notes">
+  <ion-content>
+    <div class="card">
+      <div class="item item-text-wrap">
+        <h1>Notes {{session.title}}</h1>
+        <button class="button button-positive" ng-click="takeCamera()">
+          <i class="ion-camera"></i>
+        </button>
+        <button class="button button-positive" ng-click="openCamera()">
+          <i class="ion-image"></i>
+        </button>
+        <button class="button button-positive" ng-click="takeAudio()">
+          <i class="ion-android-microphone"></i>
+        </button>
+        <button class="button button-positive" ng-click="takeVideo()">
+          <i class="ion-ios-videocam"></i>
+        </button>
+        <button class="button button-block button-positive" ng-click="save()">Save</button>
+        <textarea ng-model="note.text" placeholder="Some text" rows="10"></textarea>
+        <img ng-src="{{note.picture}}" id="image" style="width:100%;height:auto;"/>
+
+        <video width="320" height="240" ng-repeat="video in note.videos" controls>
+          <source ng-src="{{video.url}}" type="{{video.type}}">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
