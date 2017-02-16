@@ -190,4 +190,40 @@ angular.module('controllers', [])
     openurl('https://github.com/TidyMaze');
   }
 })
+
+.controller('CalendarCtrl', function($scope) {
+  $scope.calendarClick = function(){
+    console.log('click !');
+  }
+  $scope.uiConfig = {
+    calendar: {
+      editable: false,
+      height: 900,
+      defaultView: 'agendaDay',
+      minTime: '7:30:00',
+      maxTime: '22:00:00',
+      eventClick: $scope.calendarClick,
+    }
+  };
+  $scope.eventSources = [
+        {
+            events: [
+                {
+                    title  : 'event1',
+                    start  : '2017-02-16'
+                },
+                {
+                    title  : 'event2',
+                    start  : '2017-02-16',
+                    end    : '2017-02-17'
+                },
+                {
+                    title  : 'event3',
+                    start  : '2017-02-16T12:30:00',
+                    end    : '2017-02-16T15:30:00'
+                }
+            ]
+        }
+  ];
+})
 ;
